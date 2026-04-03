@@ -132,11 +132,11 @@ local function worker(user_args)
     )
 
     net_speed_widget:connect_signal(
-		"button::press",
-		function()
+        "button::press",
+        function()
             awful.spawn("systemsettings5 kcm_networkmanagement")
-		end
-	)
+        end
+    )
 
     return net_speed_widget
 end

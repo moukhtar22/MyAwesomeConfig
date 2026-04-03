@@ -15,7 +15,7 @@ IMPORTANT: if you are using the 'cpu' function, it will cause a segmentation fau
     otherwise the update_num will not be reset and you will get an error.
 
 To call this script in Conky, use the following (assuming that you save this script to ~/.config/conky/hybrid/lua/hybrid-rings.lua):
-	lua_load = '~/.config/conky/hybrid/lua/hybrid-rings.lua',
+    lua_load = '~/.config/conky/hybrid/lua/hybrid-rings.lua',
     lua_draw_hook_pre = 'conky_main'
 ]]
 
@@ -710,7 +710,7 @@ function conky_ring_stats(cr)
     
         cairo_arc(cr, xc, yc, ring_r, angle_0, angle_0 + t_arc)
         cairo_set_source_rgba(cr, rgb_to_r_g_b(fgc, fga))
-        cairo_stroke(cr)		
+        cairo_stroke(cr)        
     end
 
 
@@ -747,9 +747,9 @@ function conky_ring_stats(cr)
     end
 
 
-	local function setup_rings(cr, pt)
-		local str = ''
-		local value = 0
+    local function setup_rings(cr, pt)
+        local str = ''
+        local value = 0
 
         str = string.format('${%s %s}', pt.name, pt.arg)
         str = conky_parse(str)
@@ -761,7 +761,7 @@ function conky_ring_stats(cr)
             value = value - 12
         end
 
-		if value == nil then value = 0 end
+        if value == nil then value = 0 end
         local pct = value / pt.max
         local level_watch_pct = pct * 100
 
@@ -778,13 +778,13 @@ function conky_ring_stats(cr)
     end
 
 
-	local updates=conky_parse('${updates}')
-	update_num = tonumber(updates)
+    local updates=conky_parse('${updates}')
+    update_num = tonumber(updates)
 
-	if update_num > update_num_min then
-	    for i in pairs(settings_table) do
+    if update_num > update_num_min then
+        for i in pairs(settings_table) do
             setup_rings(cr, settings_table[i])
-	    end
+        end
     end
 end
 

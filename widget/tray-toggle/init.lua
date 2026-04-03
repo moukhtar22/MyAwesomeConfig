@@ -8,62 +8,62 @@ local widget_icon_dir = config_dir .. "widget/tray-toggle/icons/"
 local beautiful = require("beautiful")
 
 local widget =
-	wibox.widget {
-	{
-		id = "icon",
-		text = "",
-		align = "center",
-		valign = "center",
-		font = beautiful.iconfont,
-		widget = wibox.widget.textbox
-	},
-	layout = wibox.layout.align.horizontal
+    wibox.widget {
+    {
+        id = "icon",
+        text = "",
+        align = "center",
+        valign = "center",
+        font = beautiful.iconfont,
+        widget = wibox.widget.textbox
+    },
+    layout = wibox.layout.align.horizontal
 }
 
 local widget_button =
-	wibox.widget {
-	{
-		widget,
-		margins = dpi(7),
-		widget = wibox.container.margin
-	},
-	widget = clickable_container
+    wibox.widget {
+    {
+        widget,
+        margins = dpi(7),
+        widget = wibox.container.margin
+    },
+    widget = clickable_container
 }
 
 widget_button:buttons(
-	gears.table.join(
-		awful.button(
-			{},
-			1,
-			nil,
-			function()
-				awesome.emit_signal("widget::systray:toggle")
-			end
-		)
-	)
+    gears.table.join(
+        awful.button(
+            {},
+            1,
+            nil,
+            function()
+                awesome.emit_signal("widget::systray:toggle")
+            end
+        )
+    )
 )
 
 -- Listen to signal
 awesome.connect_signal(
-	"widget::systray:toggle",
-	function()
-		if screen.primary.systray then
-			if not screen.primary.systray.visible then
-				widget.icon:set_text("")
-			else
-				widget.icon:set_text("")
-			end
-			screen.primary.systray.visible = not screen.primary.systray.visible
-		end
-	end
+    "widget::systray:toggle",
+    function()
+        if screen.primary.systray then
+            if not screen.primary.systray.visible then
+                widget.icon:set_text("")
+            else
+                widget.icon:set_text("")
+            end
+            screen.primary.systray.visible = not screen.primary.systray.visible
+        end
+    end
 )
 
 -- Update icon on start-up
 if screen.primary.systray then
-	if screen.primary.systray.visible then
-		widget.icon:set_text("")
-		-- widget.icon:set_image(widget_icon_dir .. "right-arrow" .. ".svg")
-	end
+    if screen.primary.systray.visible then
+        widget.icon:set_text("")
+        -- widget.icon:set_image(widget_icon_dir .. "right-arrow" .. ".svg")
+    end
 end
 
 -- Show only the tray button in the primary screen

@@ -9,70 +9,70 @@ local dpi = beautiful.xresources.apply_dpi
 local helpers = require("helpers")
 
 local slider =
-	wibox.widget {
-	nil,
-	{
-		id = "core",
-		max_value = 100,
-		value = 29,
-		forced_height = beautiful.slider_forced_height,
-		color = beautiful.slider_color,
-		background_color = beautiful.slider_background_color,
-		shape = gears.shape.rounded_rect,
-		widget = wibox.widget.progressbar
-	},
-	nil,
-	expand = "none",
-	layout = wibox.layout.align.vertical
+    wibox.widget {
+    nil,
+    {
+        id = "core",
+        max_value = 100,
+        value = 29,
+        forced_height = beautiful.slider_forced_height,
+        color = beautiful.slider_color,
+        background_color = beautiful.slider_background_color,
+        shape = gears.shape.rounded_rect,
+        widget = wibox.widget.progressbar
+    },
+    nil,
+    expand = "none",
+    layout = wibox.layout.align.vertical
 }
 
 watch(
-	[[bash -c "df -h / |grep '^/' | awk '{print $5}'"]],
-	10,
-	function(_, stdout)
-		local space_consumed = stdout:match("(%d+)")
-		slider.core:set_value(tonumber(space_consumed))
-		collectgarbage("collect")
-	end
+    [[bash -c "df -h / |grep '^/' | awk '{print $5}'"]],
+    10,
+    function(_, stdout)
+        local space_consumed = stdout:match("(%d+)")
+        slider.core:set_value(tonumber(space_consumed))
+        collectgarbage("collect")
+    end
 )
 
 -- local harddrive_meter =
--- 	wibox.widget {
--- 	{
--- 		{
--- 			{
--- 				image = icons.harddisk,
--- 				resize = true,
--- 				widget = wibox.widget.imagebox
--- 			},
--- 			point = function(geo, args)
--- 				return {
--- 					x = args.parent.width - geo.width,
--- 					y = (args.parent.height / 2 + (geo.height / 2)) - geo.height
--- 				}
--- 			end,
--- 			top = dpi(12),
--- 			bottom = dpi(12),
--- 			widget = wibox.container.margin
--- 		},
--- 		{
--- 			slider,
--- 			top = dpi(20),
--- 			bottom = dpi(12),
--- 			right = dpi(40),
--- 			widget = wibox.container.margin
--- 		},
--- 		layout = wibox.layout.manual
--- 	},
--- 	left = dpi(24),
--- 	right = dpi(24),
--- 	forced_height = dpi(48),
--- 	widget = wibox.container.margin
+--  wibox.widget {
+--  {
+--      {
+--          {
+--              image = icons.harddisk,
+--              resize = true,
+--              widget = wibox.widget.imagebox
+--          },
+--          point = function(geo, args)
+--              return {
+--                  x = args.parent.width - geo.width,
+--                  y = (args.parent.height / 2 + (geo.height / 2)) - geo.height
+--              }
+--          end,
+--          top = dpi(12),
+--          bottom = dpi(12),
+--          widget = wibox.container.margin
+--      },
+--      {
+--          slider,
+--          top = dpi(20),
+--          bottom = dpi(12),
+--          right = dpi(40),
+--          widget = wibox.container.margin
+--      },
+--      layout = wibox.layout.manual
+--  },
+--  left = dpi(24),
+--  right = dpi(24),
+--  forced_height = dpi(48),
+--  widget = wibox.container.margin
 -- }
 
 local harddrive_meter = helpers.create_slider_meter_widget {
-	image = icons.harddisk,
-	slider = slider,
+    image = icons.harddisk,
+    slider = slider,
 }
 
 

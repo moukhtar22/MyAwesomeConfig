@@ -13,168 +13,168 @@ local device_state = false
 local helpers = require("helpers")
 
 -- local action_name =
--- 	wibox.widget {
--- 	text = "البلوتوث",
--- 	font = beautiful.uifont,
--- 	align = "right",
--- 	widget = wibox.widget.textbox
+--  wibox.widget {
+--  text = "البلوتوث",
+--  font = beautiful.uifont,
+--  align = "right",
+--  widget = wibox.widget.textbox
 -- }
 
 local action_name =
-	helpers.add_text_icon_widget {
-	text = "البلوتوث",
-	icon = "",
-	ltr = true,
-	icon_font = beautiful.iconfont,
-	forced_width = dpi(81),
-	text_font = beautiful.uifont
+    helpers.add_text_icon_widget {
+    text = "البلوتوث",
+    icon = "",
+    ltr = true,
+    icon_font = beautiful.iconfont,
+    forced_width = dpi(81),
+    text_font = beautiful.uifont
 }
 
 local button_widget =
-	wibox.widget {
-	{
-		id = "icon",
-		image = icons.toggled_off,
-		widget = wibox.widget.imagebox,
-		resize = true
-	},
-	layout = wibox.layout.align.horizontal
+    wibox.widget {
+    {
+        id = "icon",
+        image = icons.toggled_off,
+        widget = wibox.widget.imagebox,
+        resize = true
+    },
+    layout = wibox.layout.align.horizontal
 }
 
 local widget_button =
-	wibox.widget {
-	{
-		button_widget,
-		top = dpi(7),
-		bottom = dpi(7),
-		widget = wibox.container.margin
-	},
-	widget = clickable_container
+    wibox.widget {
+    {
+        button_widget,
+        top = dpi(7),
+        bottom = dpi(7),
+        widget = wibox.container.margin
+    },
+    widget = clickable_container
 }
 
 local action_widget =
-	wibox.widget {
-	{
-		{
-			widget_button,
-			layout = wibox.layout.fixed.horizontal
-		},
-		nil,
-		action_name,
-		layout = wibox.layout.align.horizontal
-	},
-	left = dpi(24),
-	right = dpi(24),
-	forced_height = dpi(48),
-	widget = wibox.container.margin
+    wibox.widget {
+    {
+        {
+            widget_button,
+            layout = wibox.layout.fixed.horizontal
+        },
+        nil,
+        action_name,
+        layout = wibox.layout.align.horizontal
+    },
+    left = dpi(24),
+    right = dpi(24),
+    forced_height = dpi(48),
+    widget = wibox.container.margin
 }
 
 local update_imagebox = function()
-	if device_state then
-		button_widget.icon:set_image(icons.toggled_on)
-	else
-		button_widget.icon:set_image(icons.toggled_off)
-	end
+    if device_state then
+        button_widget.icon:set_image(icons.toggled_on)
+    else
+        button_widget.icon:set_image(icons.toggled_off)
+    end
 end
 
 local check_device_state = function()
-	awful.spawn.easy_async_with_shell(
-		"rfkill list bluetooth",
-		function(stdout)
-			if stdout:match("Soft blocked: yes") then
-				device_state = false
-			else
-				device_state = true
-			end
-			update_imagebox()
-		end
-	)
+    awful.spawn.easy_async_with_shell(
+        "rfkill list bluetooth",
+        function(stdout)
+            if stdout:match("Soft blocked: yes") then
+                device_state = false
+            else
+                device_state = true
+            end
+            update_imagebox()
+        end
+    )
 end
 
 check_device_state()
 
 local power_on_cmd =
-	[[
-	rfkill unblock bluetooth
+    [[
+    rfkill unblock bluetooth
 
-	# Create an AwesomeWM Notification
-	awesome-client "
-	naughty = require('naughty')
-	naughty.notification({
-		app_name = 'مدير البلوتوث',
-		title = 'اشعارات النظام',
-		message = 'تشغيل البلوتوث...',
-		icon = ']] ..
-	widget_icon_dir ..
-		"loading" ..
-			".svg" .. [['
-	})
-	"
+    # Create an AwesomeWM Notification
+    awesome-client "
+    naughty = require('naughty')
+    naughty.notification({
+        app_name = 'مدير البلوتوث',
+        title = 'اشعارات النظام',
+        message = 'تشغيل البلوتوث...',
+        icon = ']] ..
+    widget_icon_dir ..
+        "loading" ..
+            ".svg" .. [['
+    })
+    "
 
-	# Add a delay here so we can enable the bluetooth
-	sleep 1
-	
-	bluetoothctl power on
+    # Add a delay here so we can enable the bluetooth
+    sleep 1
+    
+    bluetoothctl power on
 ]]
 
 local power_off_cmd =
-	[[
-	bluetoothctl power off
-	rfkill block bluetooth
+    [[
+    bluetoothctl power off
+    rfkill block bluetooth
 
-	# Create an AwesomeWM Notification
-	awesome-client "
-	naughty = require('naughty')
-	naughty.notification({
-		app_name = 'مدير البلوتوث',
-		title = 'اشعارات النظام',
-		message = 'تم تعطيل البلوتوث.',
-		icon = ']] ..
-	widget_icon_dir .. "bluetooth-off" .. ".svg" .. [['
-	})
-	"
+    # Create an AwesomeWM Notification
+    awesome-client "
+    naughty = require('naughty')
+    naughty.notification({
+        app_name = 'مدير البلوتوث',
+        title = 'اشعارات النظام',
+        message = 'تم تعطيل البلوتوث.',
+        icon = ']] ..
+    widget_icon_dir .. "bluetooth-off" .. ".svg" .. [['
+    })
+    "
 ]]
 
 local toggle_action = function()
-	if device_state then
-		device_state = false
-		awful.spawn.easy_async_with_shell(
-			power_off_cmd,
-			function(stdout)
-				update_imagebox()
-			end
-		)
-	else
-		device_state = true
-		awful.spawn.easy_async_with_shell(
-			power_on_cmd,
-			function(stdout)
-				update_imagebox()
-			end
-		)
-	end
+    if device_state then
+        device_state = false
+        awful.spawn.easy_async_with_shell(
+            power_off_cmd,
+            function(stdout)
+                update_imagebox()
+            end
+        )
+    else
+        device_state = true
+        awful.spawn.easy_async_with_shell(
+            power_on_cmd,
+            function(stdout)
+                update_imagebox()
+            end
+        )
+    end
 end
 
 widget_button:buttons(
-	gears.table.join(
-		awful.button(
-			{},
-			1,
-			nil,
-			function()
-				toggle_action()
-			end
-		)
-	)
+    gears.table.join(
+        awful.button(
+            {},
+            1,
+            nil,
+            function()
+                toggle_action()
+            end
+        )
+    )
 )
 
 watch(
-	"rfkill list bluetooth",
-	5,
-	function(_, stdout)
-		check_device_state()
-		collectgarbage("collect")
-	end
+    "rfkill list bluetooth",
+    5,
+    function(_, stdout)
+        check_device_state()
+        collectgarbage("collect")
+    end
 )
 
 return action_widget

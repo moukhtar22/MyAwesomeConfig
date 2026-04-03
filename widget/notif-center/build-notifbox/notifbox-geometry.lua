@@ -3,19 +3,19 @@ local awful = require('awful')
 local naughty = require('naughty')
 
 local find_widget_in_wibox = function(wb, widget)
-	local function find_widget_in_hierarchy(h, widget)
-		if h:get_widget() == widget then
-	  		return h
-		end
-		local result
-	
-		for _, ch in ipairs(h:get_children()) do
-			result = result or find_widget_in_hierarchy(ch, widget)
-		end
-		return result
-  	end
-  	local h = wb._drawable._widget_hierarchy
-  	return h and find_widget_in_hierarchy(h, widget)
+    local function find_widget_in_hierarchy(h, widget)
+        if h:get_widget() == widget then
+            return h
+        end
+        local result
+    
+        for _, ch in ipairs(h:get_children()) do
+            result = result or find_widget_in_hierarchy(ch, widget)
+        end
+        return result
+    end
+    local h = wb._drawable._widget_hierarchy
+    return h and find_widget_in_hierarchy(h, widget)
 end
 
 
