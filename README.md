@@ -34,6 +34,8 @@
 - conky
 - xcolor
 - gufw
+- curl (for weather API)
+- jq (for weather API parsing)
 
 ### Installation and usage - التثبيت والاستخدام
 

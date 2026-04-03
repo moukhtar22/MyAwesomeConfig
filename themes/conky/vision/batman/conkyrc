@@ -71,7 +71,7 @@ template4='~/.config/awesome/themes/conky/vision/batman/conky-vision/#f1dc6e__32
 -------------------------------------
 --  API Key
 -------------------------------------
-template6="95c9a7df71aaf7550384c10029c20405",
+template6 = "$OPENWEATHER_API_KEY"
 
 
 -------------------------------------
@@ -104,7 +104,7 @@ conky.text = [[
 \
 \
 \
-${execi 300 ~/.config/awesome/themes/conky/vision/batman/conky-vision/get_weather ${template6} ${template7} ${template8} ${template9}}\
+${execi 300 .*/get_weather "" ${template7} ${template8} ${template9}}\
 \
 \
 \

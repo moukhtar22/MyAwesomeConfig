@@ -12,7 +12,12 @@ mkdir -p ~/".cache/conky-vision"
 
 api_prefix="api.openweathermap.org/data/2.5/"
 
-appid="APPID=$1"
+# Get API key from environment variable or use first parameter as fallback
+if [ -n "$OPENWEATHER_API_KEY" ]; then
+    appid="APPID=$OPENWEATHER_API_KEY"
+else
+    appid="APPID=$1"
+fi
 id="&id=$2"
 units="&units=$3"
 lang="" ; [[ -v 4 ]] && lang="${4%%_*}" lang="&lang=$lang"

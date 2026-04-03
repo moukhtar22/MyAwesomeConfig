@@ -51,10 +51,10 @@ conky.config = {
     template2 = "~/.config/awesome/themes/conky/vision/light/conky-vision/#000__32", --  +2days
     template3 = "~/.config/awesome/themes/conky/vision/light/conky-vision/#000__32", --  +3days
     template4 = "~/.config/awesome/themes/conky/vision/light/conky-vision/#000__32", --  +4days
-    -------------------------------------
-    --  API Key
-    -------------------------------------
-    template6 = "95c9a7df71aaf7550384c10029c20405",
+-------------------------------------
+--  API Key - Set via environment variable OPENWEATHER_API_KEY
+-------------------------------------
+template6 = "$OPENWEATHER_API_KEY"
     -------------------------------------
     --  City ID
     -------------------------------------
@@ -79,7 +79,7 @@ conky.text =
 \
 \
 \
-${execi 300 ~/.config/awesome/themes/conky/vision/light/conky-vision/get_weather ${template6} ${template7} ${template8} ${template9}}\
+${execi 300 ~/.config/awesome/themes/conky/vision/light/conky-vision/get_weather "" ${template7} ${template8} ${template9}}\
 \
 \
 \

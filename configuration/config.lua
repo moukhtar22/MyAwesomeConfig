@@ -13,8 +13,9 @@ return {
 			port = "993"
 		},
 		weather = {
-			-- API Key
-			key = "95c9a7df71aaf7550384c10029c20405",
+			-- API Key - Get from https://openweathermap.org/api
+			-- Set via environment variable OPENWEATHER_API_KEY or replace this value
+			key = os.getenv("OPENWEATHER_API_KEY") or "",
 			-- City ID
 			city_id = "6940571",
 			-- Units
@@ -76,7 +77,8 @@ return {
 			-- Clock format
 			military_clock = true,
 			-- Default password if there's no PAM integration
-			fallback_password = "611952",
+			-- Set via environment variable LOCKSCREEN_FALLBACK_PASSWORD or leave empty to disable
+			fallback_password = os.getenv("LOCKSCREEN_FALLBACK_PASSWORD") or "",
 			-- Capture intruder using webcam
 			capture_intruder = true,
 			-- Intruder image save location (Will create directory if it doesn't exist)
